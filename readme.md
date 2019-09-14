@@ -4,12 +4,6 @@ Essais pour re-développer Peintur en Node JS, avec Express et une base de
 données SQlite.
 
 
-## A faire...
-
-* POST /tableaux/create
-* POST /tableaux/edit/5
-
-
 ## Améliorations
 
 ### Terminer màj suite à posts
@@ -20,8 +14,8 @@ données SQlite.
 
 ### Controles de saisie
 
-* Côté client
-* Côté serveur
+* Côté client (package express-validator ?)
+* Côté serveur (package express-validator)
 * AntiForgeryToken
 
 ### Controles des routes

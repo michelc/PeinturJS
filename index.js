@@ -86,21 +86,21 @@ app.get("/tableaux/details/:id", (req, res) => {
   let sql = "SELECT * FROM Tableaux WHERE Tableau_ID = ?";
   db.get(sql, id, (err, tableau) => {
     if (err) return console.error(err.message);
-      sql = "SELECT * FROM Cotes ORDER BY Nom";
-      db.all(sql, [], (err, cotes) => {
-        if (err) return console.error(err.message);
-        let prix = "";
-        for (const cote of cotes) {
-          if (cote.Nom.startsWith("Officielle")) {
-            prix = ` => Prix = ${cote.Valeur * tableau.Points} €` + prix;
-          } else {
-            prix += ` &nbsp; / &nbsp; ${cote.Nom} = ${cote.Valeur * tableau.Points}`;
-          }
+    sql = "SELECT * FROM Cotes ORDER BY Nom";
+    db.all(sql, [], (err, cotes) => {
+      if (err) return console.error(err.message);
+      let prix = "";
+      for (const cote of cotes) {
+        if (cote.Nom.startsWith("Officielle")) {
+          prix = ` => Prix = ${cote.Valeur * tableau.Points} €` + prix;
+        } else {
+          prix += ` &nbsp; / &nbsp; ${cote.Nom} = ${cote.Valeur * tableau.Points}`;
         }
-        tableau.Prix = prix;
-        renderView(res, "tableaux/details", tableau);
-      });
+      }
+      tableau.Prix = prix;
+      renderView(res, "tableaux/details", tableau);
     });
+  });
 });
 
 const selectOptions = (entite, tableau, callback) => {
@@ -146,6 +146,37 @@ app.get("/tableaux/create", (req, res) => {
   });
 });
 
+// POST /tableaux/create
+app.post("/tableaux/create", (req, res) => {
+  let sql = "SELECT * FROM Tailles WHERE Nom = ?";
+  const taille = req.body.Taille;
+  db.get(sql, taille, (err, taille) => {
+    if (err) return console.error(err.message);
+    sql = `INSERT INTO Tableaux
+             (Nom, Annee, Technique, Sujet, Support, Cadre, Stockage, Taille, Points, Poids, Commentaires)
+           VALUES
+             (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    const points = (taille) ? taille.Valeur : 0;
+    const data = [
+      req.body.Nom,
+      req.body.Annee,
+      req.body.Technique,
+      req.body.Sujet,
+      req.body.Support,
+      req.body.Cadre,
+      req.body.Stockage,
+      req.body.Taille,
+      points,
+      Number(req.body.Poids),
+      req.body.Commentaires
+    ];
+    db.run(sql, data, err => {
+      if (err) return console.error(err.message);
+      res.redirect("/");
+    });
+  });
+});
+
 // GET /tableaux/edit/5
 app.get("/tableaux/edit/:id", (req, res) => {
   const id = Number(req.params.id);
@@ -154,6 +185,47 @@ app.get("/tableaux/edit/:id", (req, res) => {
     if (err) return console.error(err.message);
     loadOptions(tableau, () => {
       renderView(res, "tableaux/edit", tableau);
+    });
+  });
+});
+
+// POST /tableaux/edit/5
+app.post("/tableaux/edit/:id", (req, res) => {
+  let sql = "SELECT * FROM Tailles WHERE Nom = ?";
+  const taille = req.body.Taille;
+  db.get(sql, taille, (err, taille) => {
+    if (err) return console.error(err.message);
+    sql = `UPDATE Tableaux
+           SET    Nom = ?,
+                  Annee = ?,
+                  Technique = ?,
+                  Sujet = ?,
+                  Support = ?,
+                  Cadre = ?,
+                  Stockage = ?,
+                  Taille = ?,
+                  Points = ?,
+                  Poids = ?,
+                  Commentaires = ?
+           WHERE  Tableau_ID = ?`;
+    const points = (taille) ? taille.Valeur : 0;
+    const data = [
+      req.body.Nom,
+      req.body.Annee,
+      req.body.Technique,
+      req.body.Sujet,
+      req.body.Support,
+      req.body.Cadre,
+      req.body.Stockage,
+      req.body.Taille,
+      points,
+      Number(req.body.Poids),
+      req.body.Commentaires,
+      Number(req.params.id)
+    ];
+    db.run(sql, data, err => {
+      if (err) return console.error(err.message);
+      res.redirect("/");
     });
   });
 });
@@ -174,7 +246,7 @@ app.post("/tableaux/delete/:id", (req, res) => {
   const sql = "DELETE FROM Tableaux WHERE Tableau_ID = ?";
   db.get(sql, id, (err, row) => {
     if (err) return console.error(err.message);
-    res.redirect("/tableaux");
+    res.redirect("/");
   });
 });
 
