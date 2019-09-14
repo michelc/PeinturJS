@@ -21,7 +21,6 @@ données SQlite.
 ### Controles des routes
 
 * `:id` n'est pas défini => BadRequest
-* db.get() renvoie null => NotFound
 
 ### Fonctionalités
 
