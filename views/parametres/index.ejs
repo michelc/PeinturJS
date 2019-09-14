@@ -1,0 +1,37 @@
+<%- include("../_header.ejs") -%>
+
+<% model.Titre = `Liste des ${model.Type}s` %>
+
+<h2><%= model.Titre %> (<span id="count"><%= model.Parametres.length %></span>)</h2>
+
+<div class="table-responsive-sm">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Nom</th>
+        <%_ if (model.Complement) { _%>
+        <th scope="col"><%= model.Complement %></th>
+        <%_ } _%>
+        <th class="d-print-none">
+          <a class="btn btn-sm btn-success" href="<%= model.Route %>/create">Ajouter</a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <%_ for (const item of model.Parametres) { _%>
+      <tr>
+        <td><%= item.Nom %></td>
+        <%_ if (model.Complement) { _%>
+        <td><%= item.Valeur %></td>
+        <%_ } _%>
+        <td class="d-print-none">
+          <a class="btn btn-sm btn-warning" href="<%= model.Route %>/edit/<%= item.ID %>">Modifier</a>
+          <a class="btn btn-sm btn-danger" href="<%= model.Route %>/delete/<%= item.ID %>">Effacer</a>
+        </td>
+      </tr>
+      <%_ } _%>
+    </tbody>
+  </table>
+</div>
+
+<%- include("../_footer.ejs") -%>

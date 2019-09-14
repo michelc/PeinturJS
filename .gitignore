@@ -1,0 +1,19 @@
+# Dossiers à ignorer
+
+.vscode/
+_temp/
+data/
+node_modules/
+
+# Fichiers à ignorer
+
+*.secret
+_*.md
+
+# Trucs temporaires à ignorer
+
+_temp/
+*.bak
+*.rar
+*.zip
+* - Copie.*

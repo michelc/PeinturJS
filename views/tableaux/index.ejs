@@ -1,0 +1,44 @@
+<%- include("../_header.ejs") -%>
+
+<h2>Liste des tableaux (<span id="count"><%= model.length %></span>)</h2>
+
+<%- include("../_filter.ejs") -%>
+
+<div class="table-responsive-sm">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col" data-sort="int" class="d-print-none d-none d-sm-table-cell">Id</th>
+        <th scope="col" data-sort="string-ins" class="w-half">Nom</th>
+        <th scope="col" data-sort="string-ins" class="d-none d-sm-table-cell">Année</th>
+        <th scope="col" data-sort="string-ins">Technique</th>
+        <th scope="col" data-sort="string-ins" class="d-none d-sm-table-cell">Sujet</th>
+        <th class="d-print-none">
+          <a class="btn btn-sm btn-success" href="/tableaux/create">Ajouter</a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <%_ for (const item of model) { _%>
+      <tr>
+        <td class="d-print-none d-none d-sm-table-cell">
+          <span class="text-secondary font-xx-small"><%= item.Tableau_ID %></span>
+        </td>
+        <td class="w-half">
+          <a href="/tableaux/details/<%= item.Tableau_ID %>"><%= item.Nom %></a>
+        </td>
+        <td class="d-none d-sm-table-cell"><%= item.Annee %></td>
+        <td><%= item.Technique %></td>
+        <td class="d-none d-sm-table-cell"><%= item.Sujet %></td>
+        <td class="d-print-none">
+          <a class="btn btn-sm btn-warning" href="/tableaux/edit/<%= item.Tableau_ID %>">Modifier</a>
+        </td>
+      </tr>
+      <%_ } _%>
+    </tbody>
+  </table>
+</div>
+
+<%- include("../_footer.ejs") -%>
+
+<%- include("../_table-scripts.ejs") -%>

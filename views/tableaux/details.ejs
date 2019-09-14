@@ -1,0 +1,24 @@
+﻿<%- include("../_header.ejs") -%>
+
+<% model.Titre = "Détail d'un tableau" %>
+
+<h2><%= model.Titre %></h2>
+
+<div class="form-horizontal">
+
+  <%- include("_display.ejs", {model: model}) -%>
+
+  <div class="form-group row">
+    <label class="col-form-label col-sm-2"></label>
+    <div class="col-sm-10">
+      <a href="/" class="btn btn-outline-dark">Quitter</a>
+      <span class="float-right">
+        <a class="btn btn-sm btn-warning" href="/tableaux/edit/<%= model.Tableau_ID %>">Modifier</a>
+        <a class="btn btn-sm btn-danger" href="/tableaux/delete/<%= model.Tableau_ID %>">Effacer</a>
+      </span>
+    </div>
+  </div>
+
+</div>
+
+<%- include("../_footer.ejs") -%>

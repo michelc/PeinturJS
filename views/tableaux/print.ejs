@@ -1,0 +1,57 @@
+﻿<%- include("../_header.ejs") -%>
+
+<h2>Liste des tableaux (<span id="count"><%= model.length %></span>)</h2>
+
+<%- include("../_filter.ejs") -%>
+
+<div class="table-responsive-sm">
+  <table class="table table-hover small">
+    <thead>
+      <tr>
+        <th scope="col" data-sort="string-ins" class="w-third">Nom</th>
+        <th scope="col" data-sort="string-ins">Année</th>
+        <th scope="col" data-sort="string-ins">Technique</th>
+        <th scope="col" data-sort="string-ins">Sujet</th>
+        <th scope="col" data-sort="string-ins">Support</th>
+        <th scope="col" data-sort="string-ins">Cadre</th>
+        <th scope="col" data-sort="string-ins">Stockage</th>
+        <th scope="col" data-sort="string-ins">Taille</th>
+        <th scope="col" data-sort="string-ins"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%_ for (const book of model) { _%>
+      <tr>
+        <td class="w-third">
+          <a href="/tableaux/details/<%= book.Tableau_ID %>"><%= book.Nom %></a>
+          <a href="/tableaux/edit/<%= book.Tableau_ID %>" class="badge-pill badge-warning d-print-none">M</a>
+        </td>
+        <td><%= book.Annee %></td>
+        <td><%= book.Technique %></td>
+        <td><%= book.Sujet %></td>
+        <td>
+          <%_ if (book.Support === "Toile") { _%>
+          <span class="text-secondary font-italic"><%= book.Support %></span>
+          <%_ } else { _%>
+          <%= book.Support %>
+          <%_ } _%>
+        </td>
+        <td>
+          <%_ if (book.Cadre === "Non") { _%>
+          <span class="text-secondary font-italic"><%= book.Cadre %></span>
+          <%_ } else { _%>
+          <%= book.Cadre %>
+          <%_ } _%>
+        </td>
+        <td><%= book.Stockage %></td>
+        <td><%= book.Taille %></td>
+        <td><%= book.Commentaires %></td>
+      </tr>
+      <%_ } _%>
+    </tbody>
+  </table>
+</div>
+
+<%- include("../_footer.ejs") -%>
+
+<%- include("../_table-scripts.ejs") -%>

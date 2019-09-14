@@ -1,0 +1,98 @@
+﻿body {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+/*  "container" for md and lg, but "container-fluid" for xs and sm */
+@media (max-width: 992px) {
+    .container {
+        max-width: 100% !important;
+    }
+}
+
+.navbar {
+    margin-bottom: 20px;
+}
+
+h2 {
+    padding-bottom: 20px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists
+   will truncate terms that are too long to fit in the left column
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+textarea {
+    min-height: 7em;
+}
+
+.form-control[readonly] {
+    background-color: transparent;
+    opacity: 1;
+}
+
+/* No border for table header */
+.table th {
+    border-top: none !important;
+}
+
+/* No "valid/success" color for radio buttons label */
+.form-check-input[type="radio"].is-valid ~ .form-check-label {
+    color: #212529;
+}
+
+/* Light weight for default radio buttons */
+.form-check-input[type="radio"] ~ .form-check-label {
+    font-weight: 100;
+}
+/* Normal weight for checked radio buttons */
+.form-check-input[type="radio"]:checked ~ .form-check-label {
+    font-weight: normal;
+}
+
+/* Hide validation summary with no errors */
+.validation-summary-valid {
+    display: none;
+}
+
+/* Remove margin after error list */
+.validation-summary-errors ul {
+    margin-bottom: 0;
+}
+
+/* Add a margin after error box */
+.validation-summary-errors {
+    margin-bottom: 1.5rem;
+}
+
+/* Bold weight (but not too bold) for labels */
+.col-form-label {
+    font-weight: 600;
+}
+
+.table-responsive-sm table {
+    min-width: 500px !important;
+}
+.w-third {
+    width: 30% !important;
+}
+.w-half {
+    width: 50% !important;
+}
+@media (max-width: 768px) {
+    .w-third {
+        width: 50% !important;
+        min-width: 50% !important;
+    }
+    .w-half {
+        min-width: 60% !important;
+    }
+}
+
+/* Microscopic font-size to display ids */
+.font-xx-small {
+    font-size: xx-small;
+}

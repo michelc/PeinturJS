@@ -1,0 +1,70 @@
+﻿<div class="form-group row">
+  <label class="col-form-label col-sm-2" for="Nom">Nom</label>
+  <div class="col-sm-10">
+    <input autofocus="" class="form-control" id="Nom" name="Nom" type="text" value="<%= model.Nom %>" />
+  </div>
+</div>
+
+<div class="form-group row">
+  <label class="col-form-label col-sm-2" for="Annee">Année</label>
+  <div class="col-sm-2">
+    <input class="form-control" id="Annee" name="Annee" type="text" value="<%= model.Annee %>" />
+  </div>
+</div>
+
+<div class="form-group row">
+  <label class="col-form-label col-sm-2 pt-0" for="Technique">Technique</label>
+  <div class="col-sm-10">
+    <%- include("../_input-list.ejs", {model: { Entite: "Technique", Values: model.Techniques }}) -%>
+  </div>
+</div>
+
+<div class="form-group row">
+  <label class="col-form-label col-sm-2 pt-0" for="Sujet">Sujet</label>
+  <div class="col-sm-10">
+    <%- include("../_input-list.ejs", {model: { Entite: "Sujet", Values: model.Sujets }}) -%>
+  </div>
+</div>
+
+<div class="form-group row">
+  <label class="col-form-label col-sm-2 pt-0" for="Support">Support</label>
+  <div class="col-sm-10">
+    <%- include("../_input-list.ejs", {model: { Entite: "Support", Values: model.Supports }}) -%>
+  </div>
+</div>
+
+<div class="form-group row">
+  <label class="col-form-label col-sm-2 pt-0" for="Cadre">Cadre</label>
+  <div class="col-sm-10">
+    <%- include("../_input-list.ejs", {model: { Entite: "Cadre", Values: model.Cadres }}) -%>
+  </div>
+</div>
+
+<div class="form-group row">
+  <label class="col-form-label col-sm-2 pt-0" for="Stockage">Stockage</label>
+  <div class="col-sm-10">
+    <%- include("../_input-list.ejs", {model: { Entite: "Stockage", Values: model.Stockages }}) -%>
+  </div>
+</div>
+
+<div class="form-group row">
+  <label class="col-form-label col-sm-2 pt-0" for="Taille">Taille (Gd x Pt)</label>
+  <div class="col-sm-10">
+    <%- include("../_input-list.ejs", {model: { Entite: "Taille", Values: model.Tailles }}) -%>
+  </div>
+</div>
+
+<div class="form-group row">
+  <label class="col-form-label col-sm-2" for="Poids">Poids (en kg)</label>
+  <div class="col-sm-2">
+    <input class="form-control" id="Poids" name="Poids" type="text" value="<%= model.Poids %>" />
+  </div>
+</div>
+
+<div class="form-group row">
+  <label class="col-form-label col-sm-2" for="Commentaires">Commentaires</label>
+  <div class="col-sm-10">
+      <textarea class="form-control" cols="20" id="Commentaires" maxlength="32000" name="Commentaires" rows="2"><%= model.Commentaires %>
+</textarea>
+  </div>
+</div>

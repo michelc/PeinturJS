@@ -1,0 +1,15 @@
+﻿<div class="form-group row">
+  <label class="col-form-label col-sm-2 for="Nom">Libellé</label>
+  <div class="col-sm-3">
+    <input autofocus class="form-control" id="Nom" name="Nom" type="text" value="<%= model.Nom %>" />
+  </div>
+</div>
+
+<% if (model.Complement) { %>
+  <div class="form-group row">
+    <label class="col-form-label col-sm-2 for="Valeur"><%= model.Complement %></label>
+    <div class="col-sm-2">
+      <input class="form-control" id="Valeur" name="Valeur" type="text" value="<%= model.Valeur %>" />
+    </div>
+  </div>
+<% } %>

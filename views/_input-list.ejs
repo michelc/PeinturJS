@@ -1,0 +1,26 @@
+<%_ if (model.Values.length > 10) { _%>
+<select class="custom-select col-sm-3" id="<%= model.Entite %>" name="<%= model.Entite %>">
+    <%_ for (const value of model.Values) { _%>
+      <%_
+        const selected = value.Selected ? " selected" : "";
+      _%>
+      <option<%= selected %> value="<%= value.Caption %>"><%= value.Caption %></option>
+    <%_ } _%>
+    </select>
+<%_ } else { _%>
+  <%_
+    let index = 0;
+  _%>
+  <%_ for (const value of model.Values) { _%>
+    <%_
+      const spacer = index ? "    " : "";
+      index++;
+      const id = model.Entite + "_" + index;
+      const checked = value.Selected ? " checked" : ""
+      _%>
+<%= spacer %><div class="form-check form-check-inline">
+      <input<%= checked %> class="form-check-input" id="<%= id %>" name="<%= model.Entite %>" type="radio" value="<%= value.Caption %>" />
+      <label class="form-check-label" for="<%= id %>"><%= value.Caption %></label>
+    </div>
+  <%_ } _%>
+<%_ } _%>

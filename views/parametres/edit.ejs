@@ -1,0 +1,25 @@
+﻿<%- include("../_header.ejs") -%>
+
+<% model.Titre = `Modifier un·e ${model.Type}` %>
+
+<h2><%= model.Titre %></h2>
+
+<form action="<%= model.Route %>/edit/<%= model.ID %>" method="post">
+  <div class="form-horizontal">
+
+    <%- include("_editor.ejs", {model: model}) -%>
+
+    <div class="form-group row">
+      <label class="col-form-label col-sm-2"></label>
+      <div class="col-sm-10">
+        <input type="submit" value="Modifier" class="btn btn-default btn-warning" />
+        <a href="<%= model.Route %>" class="btn btn-outline-dark">Annuler</a>
+      </div>
+    </div>
+
+  </div>
+</form>
+
+<%- include("../_footer.ejs") -%>
+
+<%- include("../_form-scripts.ejs") -%>

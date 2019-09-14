@@ -1,0 +1,38 @@
+﻿<%- include("../_header.ejs") -%>
+
+<h2>Liste des tableaux (<span id="count"><%= model.length %></span>)</h2>
+
+<%- include("../_filter.ejs") -%>
+
+<div class="table-responsive-sm">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col" data-sort="string-ins" class="w-half">Nom</th>
+        <th scope="col" data-sort="int" class="d-sm-none">Prix</th>
+        <th scope="col" data-sort="string-ins">Technique</th>
+        <th scope="col" data-sort="string-ins">Taille</th>
+        <th scope="col" data-sort="string-ins" class="d-none d-sm-table-cell">Cadre</th>
+        <th scope="col" data-sort="int" class="d-none d-sm-table-cell">Prix</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%_ for (const book of model) { _%>
+      <tr>
+        <td class="w-half">
+          <a href="/tableaux/details/<%= book.Tableau_ID %>"><%= book.Nom %></a>
+        </td>
+        <td class="d-sm-none"><%= book.Prix %></td>
+        <td><%= book.Technique %></td>
+        <td><%= book.Taille %></td>
+        <td class="d-none d-sm-table-cell"><%= book.Cadre %></td>
+        <td class="d-none d-sm-table-cell"><%= book.Prix %></td>
+      </tr>
+      <%_ } _%>
+    </tbody>
+  </table>
+</div>
+
+<%- include("../_footer.ejs") -%>
+
+<%- include("../_table-scripts.ejs") -%>
