@@ -82,7 +82,7 @@ app.get("/tableaux/prix", (req, res) => {
 
 // GET /tableaux/details/5
 app.get("/tableaux/details/:id", (req, res) => {
-  const id = req.params.id;
+  const id = Number(req.params.id);
   let sql = "SELECT * FROM Tableaux WHERE Tableau_ID = ?";
   db.get(sql, id, (err, tableau) => {
     if (err) return console.error(err.message);
@@ -148,7 +148,7 @@ app.get("/tableaux/create", (req, res) => {
 
 // GET /tableaux/edit/5
 app.get("/tableaux/edit/:id", (req, res) => {
-  const id = req.params.id;
+  const id = Number(req.params.id);
   const sql = "SELECT * FROM Tableaux WHERE Tableau_ID = ?";
   db.get(sql, id, (err, tableau) => {
     if (err) return console.error(err.message);
@@ -160,7 +160,7 @@ app.get("/tableaux/edit/:id", (req, res) => {
 
 // GET /tableaux/delete/5
 app.get("/tableaux/delete/:id", (req, res) => {
-  const id = req.params.id;
+  const id = Number(req.params.id);
   const sql = "SELECT * FROM Tableaux WHERE Tableau_ID = ?";
   db.get(sql, id, (err, row) => {
     if (err) return console.error(err.message);
@@ -170,7 +170,7 @@ app.get("/tableaux/delete/:id", (req, res) => {
 
 // POST /tableaux/delete/5
 app.post("/tableaux/delete/:id", (req, res) => {
-  const id = req.params.id;
+  const id = Number(req.params.id);
   const sql = "DELETE FROM Tableaux WHERE Tableau_ID = ?";
   db.get(sql, id, (err, row) => {
     if (err) return console.error(err.message);
@@ -213,7 +213,7 @@ app.get("/parametres/:table/create", (req, res) => {
 app.post("/parametres/:table/create", (req, res) => {
   const param = parametreModel(req.params.table);
   const sql = `INSERT INTO ${param.Table} (Nom, Valeur) VALUES (?, ?)`;
-  const data = [req.body.Nom, req.body.Valeur];
+  const data = [req.body.Nom, Number(req.body.Valeur)];
   if (!param.Complement) data[1] = null;
   db.run(sql, data, err => {
     if (err) return console.error(err.message);
@@ -224,7 +224,7 @@ app.post("/parametres/:table/create", (req, res) => {
 // GET /parametres/totos/edit/5
 app.get("/parametres/:table/edit/:id", (req, res) => {
   const param = parametreModel(req.params.table);
-  const id = req.params.id;
+  const id = Number(req.params.id);
   const sql = `SELECT * FROM ${param.Table} WHERE ID = ?`;
   db.get(sql, id, (err, row) => {
     if (err) return console.error(err.message);
@@ -239,7 +239,7 @@ app.get("/parametres/:table/edit/:id", (req, res) => {
 app.post("/parametres/:table/edit/:id", (req, res) => {
   const param = parametreModel(req.params.table);
   const sql = `UPDATE ${param.Table} SET Nom = ?, Valeur = ? WHERE ID = ?`;
-  const data = [req.body.Nom, req.body.Valeur, req.params.id];
+  const data = [req.body.Nom, Number(req.body.Valeur), Number(req.params.id)];
   if (!param.Complement) data[1] = null;
   db.run(sql, data, err => {
     if (err) return console.error(err.message);
@@ -250,7 +250,7 @@ app.post("/parametres/:table/edit/:id", (req, res) => {
 // GET /parametres/totos/delete/5
 app.get("/parametres/:table/delete/:id", (req, res) => {
   const param = parametreModel(req.params.table);
-  const id = req.params.id;
+  const id = Number(req.params.id);
   const sql = `SELECT * FROM ${param.Table} WHERE ID = ?`;
   db.get(sql, id, (err, row) => {
     if (err) return console.error(err.message);
@@ -264,7 +264,7 @@ app.get("/parametres/:table/delete/:id", (req, res) => {
 // POST /parametres/totos/delete/5
 app.post("/parametres/:table/delete/:id", (req, res) => {
   const param = parametreModel(req.params.table);
-  const id = req.params.id;
+  const id = Number(req.params.id);
   const sql = `DELETE FROM ${param.Table} WHERE ID = ?`
   db.run(sql, id, err => {
     if (err) return console.error(err.message);
