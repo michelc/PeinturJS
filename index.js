@@ -86,7 +86,7 @@ app.get("/tableaux/details/:id", (req, res) => {
   let sql = "SELECT * FROM Tableaux WHERE Tableau_ID = ?";
   db.get(sql, id, (err, tableau) => {
     if (err) return console.error(err.message);
-    if (!tableau) res.sendStatus(404);
+    if (!tableau) return res.sendStatus(404);
     sql = "SELECT * FROM Cotes ORDER BY Nom";
     db.all(sql, [], (err, cotes) => {
       if (err) return console.error(err.message);
@@ -184,7 +184,7 @@ app.get("/tableaux/edit/:id", (req, res) => {
   const sql = "SELECT * FROM Tableaux WHERE Tableau_ID = ?";
   db.get(sql, id, (err, tableau) => {
     if (err) return console.error(err.message);
-    if (!tableau) res.sendStatus(404);
+    if (!tableau) return res.sendStatus(404);
     loadOptions(tableau, () => {
       renderView(res, "tableaux/edit", tableau);
     });
@@ -238,7 +238,7 @@ app.get("/tableaux/delete/:id", (req, res) => {
   const sql = "SELECT * FROM Tableaux WHERE Tableau_ID = ?";
   db.get(sql, id, (err, tableau) => {
     if (err) return console.error(err.message);
-    if (!tableau) res.sendStatus(404);
+    if (!tableau) return res.sendStatus(404);
     renderView(res, "tableaux/delete", tableau);
   });
 });
@@ -303,7 +303,7 @@ app.get("/parametres/:table/edit/:id", (req, res) => {
   const sql = `SELECT * FROM ${param.Table} WHERE ID = ?`;
   db.get(sql, id, (err, row) => {
     if (err) return console.error(err.message);
-    if (!row) res.sendStatus(404);
+    if (!row) return res.sendStatus(404);
     param.ID = row.ID;
     param.Nom = row.Nom;
     param.Valeur = row.Valeur;
@@ -330,7 +330,7 @@ app.get("/parametres/:table/delete/:id", (req, res) => {
   const sql = `SELECT * FROM ${param.Table} WHERE ID = ?`;
   db.get(sql, id, (err, row) => {
     if (err) return console.error(err.message);
-    if (!row) res.sendStatus(404);
+    if (!row) return res.sendStatus(404);
     param.ID = row.ID;
     param.Nom = row.Nom;
     param.Valeur = row.Valeur;
