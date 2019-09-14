@@ -18,10 +18,6 @@ données SQlite.
 * Côté serveur (package express-validator)
 * AntiForgeryToken
 
-### Controles des routes
-
-* `:id` n'est pas défini => BadRequest
-
 ### Fonctionalités
 
 * Navigation avant / après dans GET /tableaux/details/5

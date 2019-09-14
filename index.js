@@ -81,8 +81,9 @@ app.get("/tableaux/prix", (req, res) => {
 });
 
 // GET /tableaux/details/5
-app.get("/tableaux/details/:id", (req, res) => {
+app.get("/tableaux/details/:id?", (req, res) => {
   const id = Number(req.params.id);
+  if (!id) return res.sendStatus(400);
   let sql = "SELECT * FROM Tableaux WHERE Tableau_ID = ?";
   db.get(sql, id, (err, tableau) => {
     if (err) return console.error(err.message);
@@ -179,8 +180,9 @@ app.post("/tableaux/create", (req, res) => {
 });
 
 // GET /tableaux/edit/5
-app.get("/tableaux/edit/:id", (req, res) => {
+app.get("/tableaux/edit/:id?", (req, res) => {
   const id = Number(req.params.id);
+  if (!id) return res.sendStatus(400);
   const sql = "SELECT * FROM Tableaux WHERE Tableau_ID = ?";
   db.get(sql, id, (err, tableau) => {
     if (err) return console.error(err.message);
@@ -233,8 +235,9 @@ app.post("/tableaux/edit/:id", (req, res) => {
 });
 
 // GET /tableaux/delete/5
-app.get("/tableaux/delete/:id", (req, res) => {
+app.get("/tableaux/delete/:id?", (req, res) => {
   const id = Number(req.params.id);
+  if (!id) return res.sendStatus(400);
   const sql = "SELECT * FROM Tableaux WHERE Tableau_ID = ?";
   db.get(sql, id, (err, tableau) => {
     if (err) return console.error(err.message);
@@ -297,9 +300,10 @@ app.post("/parametres/:table/create", (req, res) => {
 });
 
 // GET /parametres/totos/edit/5
-app.get("/parametres/:table/edit/:id", (req, res) => {
-  const param = parametreModel(req.params.table);
+app.get("/parametres/:table/edit/:id?", (req, res) => {
   const id = Number(req.params.id);
+  if (!id) return res.sendStatus(400);
+  const param = parametreModel(req.params.table);
   const sql = `SELECT * FROM ${param.Table} WHERE ID = ?`;
   db.get(sql, id, (err, row) => {
     if (err) return console.error(err.message);
@@ -324,9 +328,10 @@ app.post("/parametres/:table/edit/:id", (req, res) => {
 });
 
 // GET /parametres/totos/delete/5
-app.get("/parametres/:table/delete/:id", (req, res) => {
-  const param = parametreModel(req.params.table);
+app.get("/parametres/:table/delete/:id?", (req, res) => {
   const id = Number(req.params.id);
+  if (!id) return res.sendStatus(400);
+  const param = parametreModel(req.params.table);
   const sql = `SELECT * FROM ${param.Table} WHERE ID = ?`;
   db.get(sql, id, (err, row) => {
     if (err) return console.error(err.message);
