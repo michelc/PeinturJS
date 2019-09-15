@@ -17,10 +17,6 @@ données SQlite.
 * Côté serveur (package express-validator)
 * AntiForgeryToken (middleware csurf ?)
 
-### Fonctionalités
-
-* Navigation avant / après dans GET /tableaux/details/5
-
 
 ## TODO (plus tard)
 

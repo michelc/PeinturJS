@@ -2,7 +2,14 @@
 
 <% model.Titre = "Détail d'un tableau" %>
 
-<h2><%= model.Titre %></h2>
+<h2>
+  <%= model.Titre %>
+  <span class="float-right">
+    <a href="/tableaux/previous/<%= model.Tableau_ID %>">«--</a>
+    /
+    <a href="/tableaux/next/<%= model.Tableau_ID %>">--»</a>
+  </span>
+</h2>
 
 <div class="form-horizontal">
 

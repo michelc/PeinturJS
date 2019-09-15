@@ -105,6 +105,44 @@ app.get("/tableaux/details/:id?", (req, res) => {
   });
 });
 
+// GET /tableaux/next/5
+app.get("/tableaux/next/:id?", (req, res) => {
+  const id = Number(req.params.id);
+  if (!id) return res.sendStatus(400);
+  const sql = `SELECT 1 AS Tri, Nom, Tableau_ID
+               FROM   Tableaux
+               WHERE  Nom > (SELECT Nom FROM Tableaux WHERE Tableau_ID = ?)
+               UNION
+               SELECT 2 AS Tri, Nom, Tableau_ID
+               FROM   Tableaux
+               ORDER  BY 1, Nom
+               LIMIT  1`;
+  db.get(sql, id, (err, tableau) => {
+    if (err) return console.error(err.message);
+    if (!tableau) return res.sendStatus(500);
+    res.redirect(`/tableaux/details/${tableau.Tableau_ID}`);
+  });
+});
+
+// GET /tableaux/previous/5
+app.get("/tableaux/previous/:id?", (req, res) => {
+  const id = Number(req.params.id);
+  if (!id) return res.sendStatus(400);
+  const sql = `SELECT 1 AS Tri, Nom, Tableau_ID
+               FROM   Tableaux
+               WHERE  Nom < (SELECT Nom FROM Tableaux WHERE Tableau_ID = ?)
+               UNION
+               SELECT 2 AS Tri, Nom, Tableau_ID
+               FROM   Tableaux
+               ORDER  BY 1, Nom DESC
+               LIMIT  1`;
+  db.get(sql, id, (err, tableau) => {
+    if (err) return console.error(err.message);
+    if (!tableau) return res.sendStatus(500);
+    res.redirect(`/tableaux/details/${tableau.Tableau_ID}`);
+  });
+});
+
 const selectOptions = (entite, tableau, callback) => {
   const sql =  `SELECT Nom FROM ${entite}s ORDER BY Nom`;
   db.all(sql, [], (err, rows) => {
