@@ -156,13 +156,13 @@ const selectOptions = (entite, tableau, callback) => {
       return {
         Id: one,
         Caption: one,
-        Selected: (one === nom)
+        Selected: one === nom
       };
     });
     tableau[entite + "s"] = choices;
     if (callback) callback();
   });
-}
+};
 
 const loadOptions = async (tableau, callback) => {
   db.serialize(() => {
@@ -173,7 +173,7 @@ const loadOptions = async (tableau, callback) => {
     selectOptions("Stockage", tableau);
     selectOptions("Taille", tableau, callback);
   });
-}
+};
 
 // GET /tableaux/create
 app.get("/tableaux/create", (req, res) => {
@@ -196,7 +196,7 @@ app.post("/tableaux/create", (req, res) => {
              (Nom, Annee, Technique, Sujet, Support, Cadre, Stockage, Taille, Points, Poids, Commentaires)
            VALUES
              (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-    const points = (taille) ? taille.Valeur : 0;
+    const points = taille ? taille.Valeur : 0;
     const data = [
       req.body.Nom,
       req.body.Annee,
@@ -250,7 +250,7 @@ app.post("/tableaux/edit/:id", (req, res) => {
                   Poids = ?,
                   Commentaires = ?
            WHERE  Tableau_ID = ?`;
-    const points = (taille) ? taille.Valeur : 0;
+    const points = taille ? taille.Valeur : 0;
     const data = [
       req.body.Nom,
       req.body.Annee,
@@ -294,7 +294,7 @@ app.post("/tableaux/delete/:id", (req, res) => {
   });
 });
 
-const parametreModel = (table) => {
+const parametreModel = table => {
   var param = {
     Table: table,
     Route: `/parametres/${table}`,
@@ -306,7 +306,7 @@ const parametreModel = (table) => {
   if (param.Type == "cote") param.Complement = "Côte";
   param.Type = param.Type == "cote" ? "côte" : param.Type;
   return param;
-}
+};
 
 // GET /parametres/totos
 app.get("/parametres/:table", (req, res) => {
@@ -385,7 +385,7 @@ app.get("/parametres/:table/delete/:id?", (req, res) => {
 app.post("/parametres/:table/delete/:id", (req, res) => {
   const param = parametreModel(req.params.table);
   const id = Number(req.params.id);
-  const sql = `DELETE FROM ${param.Table} WHERE ID = ?`
+  const sql = `DELETE FROM ${param.Table} WHERE ID = ?`;
   db.run(sql, id, err => {
     if (err) return console.error(err.message);
     res.redirect(param.Route);
