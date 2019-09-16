@@ -391,3 +391,16 @@ app.post("/parametres/:table/delete/:id", (req, res) => {
     res.redirect(param.Route);
   });
 });
+
+// Pages inexistantes
+// (quand demande une URL qui n'existe pas)
+app.use((req, res, next) => {
+  res.status(404).send("La page demandée n'existe pas.");
+});
+
+// Gestion des erreurs
+// (quand une erreur survient hors try/catch ou via throw...)
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Une erreur est survenue...");
+});

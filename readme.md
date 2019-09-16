@@ -15,7 +15,7 @@ données SQlite.
 
 * Côté client (package express-validator ?)
 * Côté serveur (package express-validator)
-* AntiForgeryToken (middleware csurf ?)
+* AntiForgeryToken (https://github.com/expressjs/csurf)
 
 
 ## TODO (plus tard)
