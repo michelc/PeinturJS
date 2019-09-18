@@ -30,7 +30,7 @@ const renderView = (res, view_name, model) => {
 
 // GET /
 app.get("/", (req, res) => {
-  const sql = "SELECT Tableau_ID, Nom, Annee, Technique, Sujet FROM Tableaux ORDER BY Nom, Tableau_ID";
+  const sql = "SELECT Tableau_ID, Nom, Annee, Technique, Sujet FROM Tableaux ORDER BY Nom COLLATE NOCASE, Tableau_ID";
   db.all(sql, [], (err, rows) => {
     if (err) return console.error(err.message);
     renderView(res, "tableaux/index", rows);
@@ -39,7 +39,7 @@ app.get("/", (req, res) => {
 
 // GET /tableaux/print
 app.get("/tableaux/print", (req, res) => {
-  const sql = "SELECT * FROM Tableaux ORDER BY Nom, Tableau_ID";
+  const sql = "SELECT * FROM Tableaux ORDER BY Nom COLLATE NOCASE, Tableau_ID";
   db.all(sql, [], (err, rows) => {
     if (err) return console.error(err.message);
     const model = rows.map(one => {
@@ -62,7 +62,7 @@ app.get("/tableaux/print", (req, res) => {
 
 // GET /tableaux/prix
 app.get("/tableaux/prix", (req, res) => {
-  db.all("SELECT Tableau_ID, Nom, Points, Technique, Taille, Cadre FROM Tableaux ORDER BY Nom, Tableau_ID", [], (err, rows) => {
+  db.all("SELECT Tableau_ID, Nom, Points, Technique, Taille, Cadre FROM Tableaux ORDER BY Nom COLLATE NOCASE, Tableau_ID", [], (err, rows) => {
     if (err) return console.error(err.message);
     db.get("SELECT * FROM Cotes WHERE Nom LIKE 'Officiel%'", [], (err, cote) => {
       if (err) return console.error(err.message);
@@ -89,7 +89,7 @@ app.get("/tableaux/details/:id?", (req, res) => {
   db.get(sql, id, (err, tableau) => {
     if (err) return console.error(err.message);
     if (!tableau) return res.sendStatus(404);
-    sql = "SELECT * FROM Cotes ORDER BY Nom";
+    sql = "SELECT * FROM Cotes ORDER BY Nom COLLATE NOCASE";
     db.all(sql, [], (err, cotes) => {
       if (err) return console.error(err.message);
       let prix = "";
@@ -145,7 +145,7 @@ app.get("/tableaux/previous/:id?", (req, res) => {
 });
 
 const selectOptions = (entite, tableau, callback) => {
-  const sql = `SELECT Nom FROM ${entite}s ORDER BY Nom`;
+  const sql = `SELECT Nom FROM ${entite}s ORDER BY Nom COLLATE NOCASE`;
   db.all(sql, [], (err, rows) => {
     if (err) return console.error(err.message);
     const list = rows.map(one => one.Nom);
@@ -349,7 +349,7 @@ const parametreModel = table => {
 // GET /parametres/totos
 app.get("/parametres/:table", (req, res) => {
   const param = parametreModel(req.params.table);
-  const sql = `SELECT * FROM ${param.Table} ORDER BY Nom`;
+  const sql = `SELECT * FROM ${param.Table} ORDER BY Nom COLLATE NOCASE`;
   db.all(sql, [], (err, rows) => {
     if (err) return console.error(err.message);
     param.Parametres = rows;
