@@ -4,6 +4,16 @@
 
 <h2><%= model.Titre %></h2>
 
+<%_ if (model.errors) { _%>
+  <div class="alert alert-danger" role="alert">
+    <ul>
+      <%_ for (const error of model.errors) { _%>
+      <li><%= error.msg %></li>
+      <%_ } _%>
+    </ul>
+  </div>
+<%_ } _%>
+
 <form action="/tableaux/edit/<%= model.Tableau_ID %>" method="post">
   <div class="form-horizontal">
 

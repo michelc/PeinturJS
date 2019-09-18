@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const sqlite3 = require("sqlite3").verbose();
+const { body, validationResult } = require("express-validator");
 
 // Création du serveur Express
 const app = express();
@@ -25,7 +26,7 @@ app.listen(3000, () => {
 
 const renderView = (res, view_name, model) => {
   res.render(view_name + ".ejs", { model: model });
-}
+};
 
 // GET /
 app.get("/", (req, res) => {
@@ -144,7 +145,7 @@ app.get("/tableaux/previous/:id?", (req, res) => {
 });
 
 const selectOptions = (entite, tableau, callback) => {
-  const sql =  `SELECT Nom FROM ${entite}s ORDER BY Nom`;
+  const sql = `SELECT Nom FROM ${entite}s ORDER BY Nom`;
   db.all(sql, [], (err, rows) => {
     if (err) return console.error(err.message);
     const list = rows.map(one => one.Nom);
@@ -186,8 +187,34 @@ app.get("/tableaux/create", (req, res) => {
   });
 });
 
+const tableauValidators = [
+  body("Nom")
+    .isLength({ min: 1, max: 100 })
+    .trim()
+    .stripLow()
+    .escape()
+    .withMessage("Le Nom ne peut pas être vide (et doit faire 100 caractères maximum)"),
+  body("Poids")
+    .optional({ checkFalsy: true })
+    .isFloat({ min: 0 })
+    .withMessage("Le Poids doit être un nombre supérieur ou égal à zéro"),
+  body("Commentaires")
+    .trim()
+    .stripLow(true)
+    .escape()
+];
+
 // POST /tableaux/create
-app.post("/tableaux/create", (req, res) => {
+app.post("/tableaux/create", tableauValidators, (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    tableau = req.body;
+    loadOptions(tableau, () => {
+      tableau.errors = errors.array();
+      renderView(res, "tableaux/create", tableau);
+    });
+    return;
+  }
   let sql = "SELECT * FROM Tailles WHERE Nom = ?";
   const taille = req.body.Taille;
   db.get(sql, taille, (err, taille) => {
@@ -232,7 +259,18 @@ app.get("/tableaux/edit/:id?", (req, res) => {
 });
 
 // POST /tableaux/edit/5
-app.post("/tableaux/edit/:id", (req, res) => {
+app.post("/tableaux/edit/:id", tableauValidators, (req, res) => {
+  const id = Number(req.params.id);
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    tableau = req.body;
+    tableau.Tableau_ID = id;
+    loadOptions(tableau, () => {
+      tableau.errors = errors.array();
+      renderView(res, "tableaux/edit", tableau);
+    });
+    return;
+  }
   let sql = "SELECT * FROM Tailles WHERE Nom = ?";
   const taille = req.body.Taille;
   db.get(sql, taille, (err, taille) => {
